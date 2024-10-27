@@ -1,0 +1,112 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+    public:
+    int data;
+    Node* next;
+    Node()
+    {
+        data=0;
+        next=NULL;
+    }
+    Node(int data)
+    {
+        this->data=data;
+        this->next=NULL;
+    }
+};
+class Queue 
+{
+    Node *front,*rear;
+    public:
+    Queue()
+    {
+        front=NULL;
+        rear=NULL;
+    }
+    void enqueue()
+    {
+        int data;
+        cout<<"Enter the data to enqueue:";
+        cin>>data;
+        Node* newnode=new Node(data);
+        if(front==NULL && rear==NULL)
+        {
+            front=newnode;
+            rear=newnode;
+            return;
+        }
+        rear->next=newnode;
+        rear=newnode;
+    }
+    void dequeue()
+    {
+        Node* temp=front;
+        if(isempty())
+        {
+            cout<<"Queue is empty\n";
+            return;
+        }
+        cout<<"Removed element= "<<front->data<<endl;
+        front=front->next;
+        delete temp;
+        if(front==NULL)
+            rear=NULL;
+    }
+    void peek()
+    {
+        cout<<"Front element= "<<front->data<<endl;
+    }
+    void print()
+    {
+        Node* temp=front;
+        cout<<"Elemets in the queue:\n";
+        while(temp!=NULL)
+        {
+            cout<<temp->data<<" ";
+            temp=temp->next;
+        }
+    }
+    bool isempty()
+    {
+        if(front==NULL && rear==NULL)
+            return true;
+        else
+            return false;
+    }
+};
+int main()
+{
+    Queue q;
+    int ch;
+    char b;
+    do
+    {
+        cout<<"Enter your choice:\n1.Enqueue\n2.Dequeue\n3.Peek\n4.Isempty\n=>";
+        cin>>ch;
+        if(ch==1)
+        {
+            q.enqueue();
+            q.print();
+        }
+        if(ch==2)
+        {
+            q.dequeue();
+            q.print();
+        }
+        if(ch==3)
+        {
+            q.peek();
+        }
+        if(ch==4)
+        {
+            if(q.isempty())
+                cout<<"Queue is empty";
+            else
+                cout<<"Queue is not empty";
+        }
+        cout<<"\nDo you want to continue press y else press n:";
+        cin>>b;
+    }while(b=='y');
+}
